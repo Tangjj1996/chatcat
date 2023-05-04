@@ -1,0 +1,33 @@
+{
+  "name": "chatcat",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "prepare": "husky install",
+    "lint": "eslint . && prettier -c src test",
+    "lint:fix": "eslint . --fix && prettier -w src test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "^18.2.5",
+    "@types/react-dom": "^18.2.3",
+    "eslint": "^8.39.0",
+    "eslint-config-unjs": "^0.1.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.2.2",
+    "prettier": "^2.8.8",
+    "vitest": "^0.31.0"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx,js,tsx,mjs}": [
+      "npx prettier --write",
+      "npx eslint --fix"
+    ]
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
