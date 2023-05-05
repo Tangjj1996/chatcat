@@ -3,13 +3,10 @@ import html from "@rollup/plugin-html";
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import consola from "consola";
-import { glob } from "glob";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import { rollup } from "rollup";
 
 import type { InputOptions, OutputOptions } from "rollup";
-
-import { copy } from "./plugin/rollup-plugin-copy";
 
 const backgroundInput: InputOptions = {
   input: "./src/background/index.tsx",
@@ -40,43 +37,30 @@ const popupOutput: OutputOptions = {
   dir: "dist/popup",
 };
 
-const otherInput: InputOptions = {
-  input: glob.sync("src/**/*").filter((file) => !/background|popup/.test(file)),
-  plugins: [copy()],
-};
-
-const otherOutput: OutputOptions = {
-  dir: "dist",
-};
-
 async function run() {
   let buildFailed = false;
   const inputBundle = await Promise.all([
     rollup(backgroundInput),
     rollup(popupInput),
-    rollup(otherInput),
   ]).catch((error) => {
     buildFailed = true;
     consola.error(error);
   });
   if (inputBundle) {
-    const [backgroundBundle, popupBundle, otherBundle] = inputBundle;
+    const [backgroundBundle, popupBundle] = inputBundle;
     await Promise.all([
       backgroundBundle.write(backgroundOutput),
       popupBundle.write(popupOutput),
-      otherBundle.write(otherOutput),
     ]).catch((error) => {
       buildFailed = true;
       consola.error(error);
     });
-    await Promise.all([
-      backgroundBundle.close(),
-      popupBundle.close(),
-      otherBundle.close(),
-    ]).catch((error) => {
-      buildFailed = true;
-      consola.error(error);
-    });
+    await Promise.all([backgroundBundle.close(), popupBundle.close()]).catch(
+      (error) => {
+        buildFailed = true;
+        consola.error(error);
+      }
+    );
   }
   process.exitCode = buildFailed ? 1 : 0;
 }

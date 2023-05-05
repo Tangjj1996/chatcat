@@ -1,12 +1,9 @@
-import path from "node:path";
 import commonjs from "@rollup/plugin-commonjs";
 import html from "@rollup/plugin-html";
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
-import { glob } from "glob";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import { defineConfig, watch } from "rollup";
-import { copy } from "./plugin/rollup-plugin-copy";
 
 const isProd = process.env.NODE_ENV === "production";
 
@@ -35,16 +32,6 @@ const config = defineConfig([
       typescript(),
       isProd && terser(),
     ],
-  },
-  {
-    input: glob
-      .sync("src/**/*")
-      .filter((file) => !/background|popup/.test(file))
-      .map((file) => path.relative("src", file)),
-    output: {
-      dir: "dist",
-    },
-    plugins: [copy()],
   },
 ]);
 
