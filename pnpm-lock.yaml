@@ -33,6 +33,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^18.2.3
     version: 18.2.3
+  consola:
+    specifier: ^3.1.0
+    version: 3.1.0
   cross-env:
     specifier: ^7.0.3
     version: 7.0.3
@@ -1135,6 +1138,10 @@ packages:
       md5-hex: 3.0.1
       semver: 7.5.0
       well-known-symbols: 2.0.0
+    dev: true
+
+  /consola@3.1.0:
+    resolution: {integrity: sha512-rrrJE6rP0qzl/Srg+C9x/AE5Kxfux7reVm1Wh0wCjuXvih6DqZgqDZe8auTD28fzJ9TF0mHlSDrPpWlujQRo1Q==}
     dev: true
 
   /cross-env@7.0.3:
