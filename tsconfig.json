@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
     "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "Node",
@@ -8,7 +9,7 @@
     "jsx": "react-jsx",
     "outDir": "dist",
     "strict": true,
-    "declaration": true
+    "declaration": true,
   },
   "include": [
     "src",

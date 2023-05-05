@@ -24,6 +24,9 @@ devDependencies:
   '@rollup/plugin-typescript':
     specifier: ^11.1.0
     version: 11.1.0(rollup@3.21.5)(typescript@5.0.4)
+  '@types/node':
+    specifier: ^18.16.3
+    version: 18.16.3
   '@types/react':
     specifier: ^18.2.5
     version: 18.2.5
