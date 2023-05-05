@@ -1,11 +1,8 @@
 import commonjs from "@rollup/plugin-commonjs";
 import html from "@rollup/plugin-html";
-import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import { defineConfig, watch } from "rollup";
-
-const isProd = process.env.NODE_ENV === "production";
 
 const config = defineConfig([
   {
@@ -17,7 +14,6 @@ const config = defineConfig([
       nodeResolve(), // find in node_modules
       commonjs(), // convert to esModule
       typescript(),
-      isProd && terser(),
     ],
   },
   {
@@ -30,7 +26,6 @@ const config = defineConfig([
       commonjs(), // convert to esModule
       html(),
       typescript(),
-      isProd && terser(),
     ],
   },
 ]);

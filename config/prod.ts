@@ -3,6 +3,8 @@ import html from "@rollup/plugin-html";
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import consola from "consola";
+import fs from "fs-extra";
+import { globby } from "globby";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import { rollup } from "rollup";
 
@@ -39,6 +41,7 @@ const popupOutput: OutputOptions = {
 
 async function run() {
   let buildFailed = false;
+  consola.start("Start bundle input...");
   const inputBundle = await Promise.all([
     rollup(backgroundInput),
     rollup(popupInput),
@@ -62,7 +65,25 @@ async function run() {
       }
     );
   }
+  await copy().catch((error) => {
+    buildFailed = true;
+    consola.error(error);
+  });
+  if (!buildFailed) {
+    consola.success("Project built!");
+  } else {
+    consola.error("Project Failed😓");
+  }
   process.exitCode = buildFailed ? 1 : 0;
+}
+
+async function copy() {
+  const result = await globby("src/**/*", {
+    ignore: ["src/background/**/*", "src/popup/**/*"],
+  });
+  for (const item of result) {
+    await fs.copy(item, "dist");
+  }
 }
 
 await run();
