@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "pnpm dev",
-    "dev": "rollup -c ./config/rollup.config.dev.ts --configPlugin typescript --watch",
-    "build": "rollup -c ./config/rollup.config.dev.ts --configPlugin typescript",
+    "dev": "shx export NODE_ENV=devlopment && rollup -c --configPlugin typescript --watch",
+    "build": "shx export NODE_ENV=produciton && rollup -c --configPlugin typescript",
     "prepare": "husky install",
     "lint": "eslint . && prettier -c src test",
     "lint:fix": "eslint . --fix && prettier -w src test"
@@ -15,6 +15,10 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.1.0",
+    "@rollup/plugin-html": "^1.0.2",
+    "@rollup/plugin-node-resolve": "^15.0.2",
+    "@rollup/plugin-terser": "^0.4.1",
     "@rollup/plugin-typescript": "^11.1.0",
     "@types/react": "^18.2.5",
     "@types/react-dom": "^18.2.3",
@@ -24,6 +28,7 @@
     "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
     "rollup": "^3.21.5",
+    "shx": "^0.3.4",
     "vitest": "^0.31.0"
   },
   "lint-staged": {
