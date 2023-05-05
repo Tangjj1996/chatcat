@@ -9,7 +9,7 @@ import { rollup } from "rollup";
 
 import type { InputOptions, OutputOptions } from "rollup";
 
-import { copy } from "./plugin/copy-plugin";
+import { copy } from "./plugin/rollup-plugin-copy";
 
 const backgroundInput: InputOptions = {
   input: "./src/background/index.tsx",

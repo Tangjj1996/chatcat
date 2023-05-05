@@ -6,7 +6,7 @@ import typescript from "@rollup/plugin-typescript";
 import { glob } from "glob";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import { defineConfig, watch } from "rollup";
-import { copy } from "./plugin/copy-plugin";
+import { copy } from "./plugin/rollup-plugin-copy";
 
 const isProd = process.env.NODE_ENV === "production";
 
