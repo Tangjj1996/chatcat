@@ -1,4 +1,3 @@
-import path from "node:path";
 import commonjs from "@rollup/plugin-commonjs";
 import html from "@rollup/plugin-html";
 import terser from "@rollup/plugin-terser";
@@ -42,10 +41,7 @@ const popupOutput: OutputOptions = {
 };
 
 const otherInput: InputOptions = {
-  input: glob
-    .sync("src/**/*")
-    .filter((file) => !/background|popup/.test(file))
-    .map((file) => path.relative("src", file)),
+  input: glob.sync("src/**/*").filter((file) => !/background|popup/.test(file)),
   plugins: [copy()],
 };
 
@@ -73,9 +69,14 @@ async function run() {
       buildFailed = true;
       consola.error(error);
     });
-    backgroundBundle.close();
-    popupBundle.close();
-    otherBundle.close();
+    await Promise.all([
+      backgroundBundle.close(),
+      popupBundle.close(),
+      otherBundle.close(),
+    ]).catch((error) => {
+      buildFailed = true;
+      consola.error(error);
+    });
   }
   process.exitCode = buildFailed ? 1 : 0;
 }
