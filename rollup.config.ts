@@ -3,6 +3,7 @@ import html from "@rollup/plugin-html";
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
+import json from "@rollup/plugin-json";
 import { defineConfig } from "rollup";
 
 const isProd = process.env.NODE_ENV === "production";
@@ -16,7 +17,6 @@ export default defineConfig([
     plugins: [
       nodeResolve(), // find in node_modules
       commonjs(), // convert to esModule
-      html(),
       typescript(),
       isProd && terser(),
     ],
@@ -26,12 +26,6 @@ export default defineConfig([
     output: {
       dir: "dist/popup",
     },
-  },
-  {
-    input: ["./src/manifest.json"],
-    output: {
-      dir: "dist",
-    },
     plugins: [
       nodeResolve(), // find in node_modules
       commonjs(), // convert to esModule
@@ -39,5 +33,12 @@ export default defineConfig([
       typescript(),
       isProd && terser(),
     ],
+  },
+  {
+    input: ["./src/manifest.json"],
+    output: {
+      dir: "dist",
+    },
+    plugins: [json()],
   },
 ]);
