@@ -1,14 +1,17 @@
+import path from "node:path";
 import commonjs from "@rollup/plugin-commonjs";
 import html from "@rollup/plugin-html";
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
+import { glob } from "glob";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
-import json from "@rollup/plugin-json";
 import { defineConfig } from "rollup";
+
+import type { RollupOptions } from "rollup";
 
 const isProd = process.env.NODE_ENV === "production";
 
-export default defineConfig([
+const background: RollupOptions[] = [
   {
     input: ["./src/background/main.ts"],
     output: {
@@ -21,6 +24,9 @@ export default defineConfig([
       isProd && terser(),
     ],
   },
+];
+
+const popup: RollupOptions[] = [
   {
     input: ["./src/popup/main.ts"],
     output: {
@@ -34,11 +40,16 @@ export default defineConfig([
       isProd && terser(),
     ],
   },
+];
+
+const other: RollupOptions[] = [
   {
-    input: ["./src/manifest.json"],
+    input: glob.sync("src/**/*.js").map((file) => path.relative("src", file)),
     output: {
       dir: "dist",
     },
-    plugins: [json()],
+    plugins: [],
   },
-]);
+];
+
+export default defineConfig([...background, ...popup, ...other]);
