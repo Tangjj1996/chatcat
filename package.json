@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "pnpm dev",
-    "dev": "cross-env NODE_ENV=development rollup -c --configPlugin typescript --watch",
-    "build": "rimraf dist && cross-env NODE_ENV=production rollup -c --configPlugin typescript",
+    "dev": "cross-env NODE_ENV=development esno ./config/dev.ts",
+    "build": "rimraf dist && cross-env NODE_ENV=production esno ./config/dev.ts",
     "prepare": "husky install",
     "lint": "eslint . && prettier -c src test",
     "lint:fix": "eslint . --fix && prettier -c -w src test"
@@ -26,6 +26,7 @@
     "cross-env": "^7.0.3",
     "eslint": "^8.39.0",
     "eslint-config-unjs": "^0.1.0",
+    "esno": "^0.16.3",
     "glob": "^10.2.2",
     "husky": "^8.0.0",
     "lint-staged": "^13.2.2",

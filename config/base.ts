@@ -6,14 +6,13 @@ import typescript from "@rollup/plugin-typescript";
 import { glob } from "glob";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import { defineConfig } from "rollup";
-
-import type { RollupOptions } from "rollup";
+import { copy } from "./plugin/copy-plugin";
 
 const isProd = process.env.NODE_ENV === "production";
 
-const background: RollupOptions[] = [
+export default defineConfig([
   {
-    input: ["./src/background/main.ts"],
+    input: ["./src/background/index.tsx"],
     output: {
       dir: "dist/background",
     },
@@ -24,11 +23,8 @@ const background: RollupOptions[] = [
       isProd && terser(),
     ],
   },
-];
-
-const popup: RollupOptions[] = [
   {
-    input: ["./src/popup/main.ts"],
+    input: ["./src/popup/index.tsx"],
     output: {
       dir: "dist/popup",
     },
@@ -40,16 +36,14 @@ const popup: RollupOptions[] = [
       isProd && terser(),
     ],
   },
-];
-
-const other: RollupOptions[] = [
   {
-    input: glob.sync("src/**/*.js").map((file) => path.relative("src", file)),
+    input: glob
+      .sync("src/**/*")
+      .filter((file) => !/background|popup/.test(file))
+      .map((file) => path.relative("src", file)),
     output: {
       dir: "dist",
     },
-    plugins: [],
+    plugins: [copy()],
   },
-];
-
-export default defineConfig([...background, ...popup, ...other]);
+]);
