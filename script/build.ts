@@ -60,7 +60,11 @@ async function build() {
   await removeOldDir();
   await runEsbuild();
 
-  await copyFiles([{ src: "src/manifest.json", dest: "manifest.json" }]);
+  await copyFiles([
+    { src: "src/manifest.json", dest: "manifest.json" },
+    { src: "src/logo.png", dest: "logo.png" },
+    { src: "src/popup/index.html", dest: "popup/index.html" },
+  ]);
 
   consola.success("All steps success, nice!");
 }

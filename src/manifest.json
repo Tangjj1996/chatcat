@@ -10,7 +10,6 @@
     "128": "logo.png"
   },
   "action": {
-    "default_popup": "popup/index.html",
-    "default_icon": "logo.png"
+    "default_popup": "popup/index.html"
   }
 }
