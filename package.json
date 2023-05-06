@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "pnpm dev",
-    "dev": "cross-env NODE_ENV=development chokidar src -c 'pnpm build'",
+    "dev": "cross-env NODE_ENV=development esno ./script/build.ts && chokidar src -c 'esno ./script/build.ts'",
     "build": "cross-env NODE_ENV=production esno ./script/build.ts",
     "prepare": "husky install",
     "lint": "eslint . && prettier -c src test",
@@ -34,6 +34,7 @@
     "lint-staged": "^13.2.2",
     "postcss": "^8.4.23",
     "prettier": "^2.8.8",
+    "serve": "^14.2.0",
     "tailwindcss": "^3.3.2",
     "vitest": "^0.31.0"
   },
