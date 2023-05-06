@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "pnpm dev",
-    "dev": "cross-env NODE_ENV=development esno ./config/dev.ts",
-    "build": "rimraf dist && cross-env NODE_ENV=production esno ./config/prod.ts",
+    "dev": "chokidar src -c 'pnpm build'",
+    "build": "rimraf dist && cross-env NODE_ENV=production esno ./script/build.ts",
     "prepare": "husky install",
     "lint": "eslint . && prettier -c src test",
     "lint:fix": "eslint . --fix && prettier -c -w src test"
@@ -24,8 +24,11 @@
     "@types/node": "^18.16.3",
     "@types/react": "^18.2.5",
     "@types/react-dom": "^18.2.3",
+    "chokidar-cli": "^3.0.0",
     "consola": "^3.1.0",
     "cross-env": "^7.0.3",
+    "dotenv": "^16.0.3",
+    "esbuild": "^0.17.18",
     "eslint": "^8.39.0",
     "eslint-config-unjs": "^0.1.0",
     "esno": "^0.16.3",
@@ -35,7 +38,6 @@
     "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
     "rimraf": "^5.0.0",
-    "rollup": "^3.21.5",
     "vitest": "^0.31.0"
   },
   "lint-staged": {
