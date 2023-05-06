@@ -1,4 +1,6 @@
 {
   "extends": ["eslint-config-unjs"],
-  "rules": {}
+  "rules": {
+    "@typescript-eslint/no-non-null-assertion": 0
+  }
 }
