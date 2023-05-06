@@ -3,12 +3,12 @@ import html from "@rollup/plugin-html";
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import consola from "consola";
-import fs from "fs-extra";
-import { globby } from "globby";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import { rollup } from "rollup";
 
 import type { InputOptions, OutputOptions } from "rollup";
+
+import { copyStaticDir } from "./util";
 
 const backgroundInput: InputOptions = {
   input: "./src/background/index.tsx",
@@ -65,7 +65,7 @@ async function run() {
       }
     );
   }
-  await copy().catch((error) => {
+  await copyStaticDir().catch((error) => {
     buildFailed = true;
     consola.error(error);
   });
@@ -75,15 +75,6 @@ async function run() {
     consola.error("Project Failed😓");
   }
   process.exitCode = buildFailed ? 1 : 0;
-}
-
-async function copy() {
-  const result = await globby("src/**/*", {
-    ignore: ["src/background/**/*", "src/popup/**/*"],
-  });
-  for (const item of result) {
-    await fs.copy(item, item.replace("src", "dist"));
-  }
 }
 
 await run();

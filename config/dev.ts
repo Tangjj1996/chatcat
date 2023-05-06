@@ -1,11 +1,14 @@
 import commonjs from "@rollup/plugin-commonjs";
 import html from "@rollup/plugin-html";
 import typescript from "@rollup/plugin-typescript";
-import { nodeResolve } from "@rollup/plugin-node-resolve";
 import consola from "consola";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import { watch } from "rollup";
+import { globbySync } from "globby";
 
 import type { InputOptions, OutputOptions } from "rollup";
+
+import { copyStaticDir } from "./util";
 
 const backgroundInput: InputOptions = {
   input: "./src/background/index.tsx",
@@ -38,6 +41,11 @@ const watcher = watch([
   {
     ...backgroundInput,
     output: [backgroundOutput],
+    watch: {
+      include: globbySync("src/**/*", {
+        ignore: ["src/background/**/*", "src/popup/**/*"],
+      }),
+    },
   },
   {
     ...popupInput,
@@ -45,29 +53,29 @@ const watcher = watch([
   },
 ]);
 
-function match<T extends string>(
-  event: T,
-  matchCallback: Partial<{ [Key in T]: () => void }>
-): void {
-  matchCallback[event]?.();
-}
-
 watcher.on("event", (event) => {
-  match(event.code, {
-    START() {
+  switch (event.code) {
+    case "START":
       consola.start("Start watching...");
-    },
-    END() {
+      break;
+    case "END":
       consola.log("End!");
-    },
-    BUNDLE_START() {
+      break;
+    case "BUNDLE_START":
       consola.start("Build start...");
-    },
-    BUNDLE_END() {
-      consola.log("Build end!");
-    },
-    ERROR() {
-      consola.error("Ops, There are some error!");
-    },
-  });
+      break;
+    case "BUNDLE_END":
+      consola.log(`Build end! duraciton: ${event.duration}`);
+      copyStaticDir()
+        .then(() => {
+          consola.log("Static copied!");
+        })
+        .catch(() => {});
+      break;
+    case "ERROR":
+      consola.error(`Ops, There are some error!\n${event.error}`);
+      break;
+    default:
+      break;
+  }
 });
