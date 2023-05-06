@@ -1,6 +1,16 @@
 {
   "manifest_version": 3,
-  "name": "Reading time",
+  "name": "Hello Extensions",
+  "description": "Base Level Extension",
   "version": "1.0",
-  "description": "Add the reading time to Chrome Extension documentation articles"
+  "icons": {
+    "16": "logo.png",
+    "32": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "action": {
+    "default_popup": "popup/index.html",
+    "default_icon": "logo.png"
+  }
 }
