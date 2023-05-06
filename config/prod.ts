@@ -82,7 +82,7 @@ async function copy() {
     ignore: ["src/background/**/*", "src/popup/**/*"],
   });
   for (const item of result) {
-    await fs.copy(item, "dist");
+    await fs.copy(item, item.replace("src", "dist"));
   }
 }
 
