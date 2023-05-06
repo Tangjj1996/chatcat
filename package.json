@@ -40,8 +40,8 @@
   },
   "lint-staged": {
     "**/*.{ts,tsx,js,tsx,mjs}": [
-      "npx prettier --write",
-      "npx eslint --fix"
+      "npx eslint --fix",
+      "npx prettier --write"
     ]
   },
   "dependencies": {
