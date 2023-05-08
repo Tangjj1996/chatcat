@@ -6,7 +6,7 @@
   "scripts": {
     "start": "pnpm dev",
     "dev": "esno ./script/config.dev.ts",
-    "build": "esno ./script/cofig.prod.ts",
+    "build": "esno ./script/config.prod.ts",
     "prepare": "husky install",
     "lint": "eslint . && prettier -c src test",
     "lint:fix": "eslint . --fix && prettier -c -w src test"
