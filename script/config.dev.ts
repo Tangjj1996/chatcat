@@ -64,7 +64,7 @@ async function build() {
 
   await copyFiles([
     { src: "src/manifest.json", dest: "manifest.json" },
-    { src: "src/logo.png1", dest: "logo.png" },
+    { src: "src/logo.png", dest: "logo.png" },
     { src: "src/popup/index.html", dest: "popup/index.html" },
   ]);
 
