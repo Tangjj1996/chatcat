@@ -5,8 +5,8 @@
   <br>
 </p>
 
-## Feature
+## 特性
 
-- No GFW
-- Easy start(browser extension)
-- Custom choose gpt model
+- 网络直连，不需要翻墙
+- 使用方便(浏览器插件)
+- 主动选择 GPT 模型
