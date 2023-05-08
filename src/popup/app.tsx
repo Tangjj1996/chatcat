@@ -1,5 +1,15 @@
-const Hello = () => (
-  <h1 className="text-3xl font-bold underline">Hello world!</h1>
-);
+import { Suspense } from "react";
+import ErrorBoundary from "../components/error-boundary";
+import Hello from "./hello";
 
-export default Hello;
+const app = () => {
+  return (
+    <ErrorBoundary fallback={<div>This is an error</div>}>
+      <Suspense fallback={<div>loading...</div>}>
+        <Hello />
+      </Suspense>
+    </ErrorBoundary>
+  );
+};
+
+export default app;
