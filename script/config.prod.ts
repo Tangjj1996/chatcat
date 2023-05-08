@@ -69,4 +69,6 @@ async function build() {
   consola.success("All steps success, nice!");
 }
 
-await build();
+await build().catch((error) => {
+  consola.error("Oops, there are some errors: ", error);
+});

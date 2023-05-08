@@ -64,7 +64,7 @@ async function build() {
 
   await copyFiles([
     { src: "src/manifest.json", dest: "manifest.json" },
-    { src: "src/logo.png", dest: "logo.png" },
+    { src: "src/logo.png1", dest: "logo.png" },
     { src: "src/popup/index.html", dest: "popup/index.html" },
   ]);
 
@@ -75,4 +75,6 @@ async function build() {
   consola.success("All steps success, nice!");
 }
 
-await build();
+await build().catch((error) => {
+  consola.error("Oops! There are some errors\n", error);
+});
