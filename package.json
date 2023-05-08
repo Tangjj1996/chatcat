@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "pnpm dev",
-    "dev": "cross-env NODE_ENV=development esno ./script/build.ts && chokidar src -c 'esno ./script/build.ts'",
-    "build": "cross-env NODE_ENV=production esno ./script/build.ts",
+    "dev": "esno ./script/config.dev.ts",
+    "build": "esno ./script/cofig.prod.ts",
     "prepare": "husky install",
     "lint": "eslint . && prettier -c src test",
     "lint:fix": "eslint . --fix && prettier -c -w src test"
@@ -20,9 +20,7 @@
     "@types/react": "^18.2.5",
     "@types/react-dom": "^18.2.3",
     "autoprefixer": "^10.4.14",
-    "chokidar-cli": "^3.0.0",
     "consola": "^3.1.0",
-    "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "esbuild": "^0.17.18",
     "esbuild-style-plugin": "^1.6.2",
