@@ -1,10 +1,7 @@
-import request from "../../request";
+import { OpenAI } from "langchain/llms/openai";
 
-import type { OpenAi } from "./interface";
+const model = new OpenAI({ openAIApiKey: ACCESS_TOKEN, temperature: 0.9 });
 
-export const postAsk = (): Promise<OpenAi> => {
-  return request({
-    method: "post",
-    url: "",
-  });
+export const postAsk = (msg: string) => {
+  return model.call(msg);
 };

@@ -7,6 +7,7 @@ import tailwindcss from "tailwindcss";
 import * as dotenv from "dotenv";
 
 import { OUTPUT_DIR } from "./const";
+import wasmPlugin from "./plugin/wasm-plugin";
 
 dotenv.config();
 
@@ -29,6 +30,7 @@ async function runEsbuild() {
       ".png": "dataurl",
     },
     plugins: [
+      wasmPlugin,
       postcssplugin({
         postcss: {
           plugins: [tailwindcss, autoprefixer],
