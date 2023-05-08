@@ -23,7 +23,7 @@ async function runEsbuild() {
     treeShaking: true,
     minify: true,
     define: {
-      ACCESS_TOKEN: process.env.ACCESS_TOKEN!,
+      ACCESS_TOKEN: JSON.stringify(process.env.ACCESS_TOKEN!),
     },
     loader: {
       ".png": "dataurl",
