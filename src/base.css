@@ -1,0 +1,7 @@
+@import "normalize.css";
+
+button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+}

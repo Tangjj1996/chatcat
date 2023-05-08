@@ -11,26 +11,16 @@ const Display: React.FC = () => {
     if (index <= serverData.length - 1) {
       return (
         <div className="session">
-          <div className="client">
-            client: {index}.{client}
-          </div>
-          <div className="server">
-            server: {index}.{serverData[index]}
-          </div>
+          <div className="client">{client}</div>
+          <div className="server">{serverData[index]}</div>
         </div>
       );
     }
-    return (
-      <div className="client">
-        client: {index}.{client}
-      </div>
-    );
+    return <div className="client">{client}</div>;
   });
   if (clienData.length < serverData.length) {
     sessionPanel.push(
-      ...serverData.map((server) => (
-        <div className="server">server: {server}</div>
-      ))
+      ...serverData.map((server) => <div className="server">{server}</div>)
     );
   }
   return <>{sessionPanel}</>;

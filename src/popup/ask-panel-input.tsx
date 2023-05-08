@@ -4,6 +4,7 @@ import { useAtom } from "jotai";
 
 import { postAsk } from "../service/openai/api";
 import { clientAtom, serverAtom } from "../model/ask-panel-session";
+import Button from "../components/button";
 
 const Input: React.FC = () => {
   const [, setClientData] = useAtom(clientAtom);
@@ -20,6 +21,7 @@ const Input: React.FC = () => {
     setClientData((data) => [...data, keywords]);
     const reuslt = await runAsync(keywords);
     setServerData((data) => [...data, reuslt]);
+    setKeywords("");
   };
 
   if (error) {
@@ -27,15 +29,15 @@ const Input: React.FC = () => {
   }
 
   return (
-    <div>
-      <input
+    <div className="flex flex-row">
+      <textarea
         placeholder="please input your question"
         value={keywords}
         onChange={(event) => {
           setKeywords(event.target.value);
         }}
       />
-      <button onClick={handleSearch}>confirm</button>
+      <Button onClick={handleSearch}>confirm</Button>
       {loading && <span>loading...</span>}
     </div>
   );
