@@ -1,4 +1,4 @@
-import swr from "swr";
+import useSwr from "swr";
 import { OpenAI } from "langchain/llms/openai";
 
 const Hello = () => {
