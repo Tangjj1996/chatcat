@@ -29,14 +29,14 @@ const Input: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-row items-center gap-x-2 mt-2">
+    <div className="mt-2 flex flex-row items-center gap-x-2">
       <textarea
         placeholder="please input your question"
         value={keywords}
         onChange={(event) => {
           setKeywords(event.target.value);
         }}
-        className="border border-slate-300 rounded-md p-2 resize-none"
+        className="resize-none rounded-md border border-slate-300 p-2"
       />
       <Button onClick={handleSearch} loading={loading}>
         confirm
