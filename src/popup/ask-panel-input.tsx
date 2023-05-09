@@ -37,8 +37,9 @@ const Input: React.FC = () => {
           setKeywords(event.target.value);
         }}
       />
-      <Button onClick={handleSearch}>confirm</Button>
-      {loading && <span>loading...</span>}
+      <Button onClick={handleSearch} loading={loading}>
+        confirm
+      </Button>
     </div>
   );
 };
