@@ -19,9 +19,9 @@ const Input: React.FC = () => {
       return;
     }
     setClientData((data) => [...data, keywords]);
+    setKeywords("");
     const reuslt = await runAsync(keywords);
     setServerData((data) => [...data, reuslt]);
-    setKeywords("");
   };
 
   if (error) {
@@ -29,13 +29,14 @@ const Input: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row items-center gap-x-2 mt-2">
       <textarea
         placeholder="please input your question"
         value={keywords}
         onChange={(event) => {
           setKeywords(event.target.value);
         }}
+        className="border border-slate-300 rounded-md p-2 resize-none"
       />
       <Button onClick={handleSearch} loading={loading}>
         confirm
