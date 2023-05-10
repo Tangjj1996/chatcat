@@ -8,7 +8,7 @@ const Airplane: React.FC<React.SVGAttributes<SVGElement>> = ({
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
     fill="none"
-    className={clx("absolute right-3 top-2 h-5 w-5", className)}
+    className={clx("h-5 w-5", className)}
     strokeWidth={1.5}
     stroke="currentColor"
     {...props}

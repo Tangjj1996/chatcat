@@ -14,7 +14,7 @@ const Display: React.FC = () => {
       return (
         <>
           <div className="m-auto mt-5 flex flex-col md:w-[600px]">
-            <UserOutline />
+            <UserOutline className="self-end" />
             <Card rtl>{client}</Card>
           </div>
           <div className="m-auto mt-5 flex flex-col md:w-[600px]">
@@ -26,7 +26,7 @@ const Display: React.FC = () => {
     }
     return (
       <div className="m-auto mt-5 flex flex-col md:w-[600px]">
-        <UserOutline />
+        <UserOutline className="self-end" />
         <Card rtl>{client}</Card>
       </div>
     );

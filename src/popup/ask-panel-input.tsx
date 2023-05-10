@@ -47,11 +47,12 @@ const Input: React.FC = () => {
           }}
         />
         {loading ? (
-          <LoadingOutline />
+          <LoadingOutline className="absolute right-3 top-2" />
         ) : (
           <AirPlaneOutline
             onClick={handleSearch}
             className={clx(
+              "absolute right-3 top-2",
               keywords ? ["opacity-100", "hover:cursor-pointer"] : "opacity-20"
             )}
           />
