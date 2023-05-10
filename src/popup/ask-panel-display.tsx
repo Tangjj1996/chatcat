@@ -13,11 +13,11 @@ const Display: React.FC = () => {
     if (index <= serverData.length - 1) {
       return (
         <>
-          <div className="m-auto mt-5 flex flex-col md:w-[600px]">
+          <div className="mx-auto flex flex-col md:w-[600px]">
             <UserOutline className="self-end" />
             <Card rtl>{client}</Card>
           </div>
-          <div className="m-auto mt-5 flex flex-col md:w-[600px]">
+          <div className="mx-auto flex flex-col md:w-[600px]">
             <OpenAiOutline />
             <Card>{serverData[index]}</Card>
           </div>
@@ -25,7 +25,7 @@ const Display: React.FC = () => {
       );
     }
     return (
-      <div className="m-auto mt-5 flex flex-col md:w-[600px]">
+      <div className="mx-auto flex flex-col md:w-[600px]">
         <UserOutline className="self-end" />
         <Card rtl>{client}</Card>
       </div>
@@ -34,14 +34,18 @@ const Display: React.FC = () => {
   if (clienData.length < serverData.length) {
     sessionPanel.push(
       ...serverData.map((server) => (
-        <div className="m-auto mt-5 flex flex-col md:w-[600px]">
+        <div className="mx-auto flex flex-col md:w-[600px]">
           <OpenAiOutline />
           <Card>{server}</Card>
         </div>
       ))
     );
   }
-  return <div className="w-full flex-auto">{sessionPanel}</div>;
+  return (
+    <div className="flex w-full flex-auto flex-col gap-5 overflow-scroll scroll-smooth py-6 hover:scroll-auto">
+      {sessionPanel}
+    </div>
+  );
 };
 
 export default Display;

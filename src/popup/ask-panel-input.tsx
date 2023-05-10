@@ -30,7 +30,7 @@ const Input: React.FC = () => {
   }
 
   return (
-    <div className="flex w-full flex-none justify-center">
+    <div className="flex w-full flex-none justify-center pb-10">
       <div className="relative">
         <textarea
           placeholder="Send a message"
