@@ -38,8 +38,9 @@ const Input: React.FC = () => {
             setKeywords(event.target.value);
           }}
           className="h-10 max-h-80 w-80 resize-none rounded-md border border-slate-300 p-2"
-          onKeyDown={(key) => {
-            if (key.code === "Enter") {
+          onKeyDown={(event) => {
+            if (event.code === "Enter") {
+              event.preventDefault();
               handleSearch();
             }
           }}
@@ -60,7 +61,7 @@ const Input: React.FC = () => {
             fill="none"
             className={clx(
               "absolute right-3 top-2 h-5 w-5",
-              keywords ? ["opacity-100", "hover:cursor-pointer"] : "opacity-50"
+              keywords ? ["opacity-100", "hover:cursor-pointer"] : "opacity-20"
             )}
             strokeWidth={1.5}
             stroke="currentColor"
