@@ -1,4 +1,5 @@
 import clx from "classnames";
+import ReactMd from "react-markdown";
 
 interface CardProps {
   rtl?: boolean;
@@ -15,7 +16,7 @@ const Card: React.FC<React.PropsWithChildren<CardProps>> = ({
         rtl ? "bg-blue-100 text-right" : "bg-gray-300"
       )}
     >
-      {children}
+      <ReactMd children={children as string}></ReactMd>
     </div>
   );
 };
