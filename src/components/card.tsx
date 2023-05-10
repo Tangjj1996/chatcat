@@ -11,7 +11,7 @@ const Card: React.FC<React.PropsWithChildren<CardProps>> = ({
   return (
     <div
       className={clx(
-        "mt-4 rounded bg-gray-300 p-4 text-slate-600",
+        "rounded bg-gray-300 p-4 text-slate-600",
         rtl && ["text-right", "bg-blue-100"]
       )}
     >
