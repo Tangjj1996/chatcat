@@ -3,10 +3,9 @@ import AskDisplay from "./ask-panel-display";
 
 const AskPanel = () => {
   return (
-    <div className="flex flex-col items-center">
-      <span>欢迎提问</span>
-      <AskInput />
+    <div className="flex h-full flex-col">
       <AskDisplay />
+      <AskInput />
     </div>
   );
 };
