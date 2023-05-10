@@ -52,8 +52,8 @@ const Input: React.FC = () => {
           <AirPlaneOutline
             onClick={handleSearch}
             className={clx(
-              "absolute right-3 top-2",
-              keywords ? ["opacity-100", "hover:cursor-pointer"] : "opacity-20"
+              "absolute right-3 top-2 transition-opacity",
+              keywords ? "opacity-100 hover:cursor-pointer" : "opacity-20"
             )}
           />
         )}

@@ -18,7 +18,7 @@ async function removeOldDir() {
 
 async function runEsbuild() {
   await esbuild.build({
-    entryPoints: ["src/background/index.tsx", "src/popup/index.tsx"],
+    entryPoints: ["src/background/index.ts", "src/popup/index.tsx"],
     bundle: true,
     outdir: OUTPUT_DIR,
     treeShaking: true,

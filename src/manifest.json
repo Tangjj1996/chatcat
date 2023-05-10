@@ -11,5 +11,18 @@
   },
   "action": {
     "default_popup": "popup/index.html"
-  }
+  },
+  "background": {
+    "scripts": [
+      "background/index.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [],
+      "js": [
+        "content/index.js"
+      ]
+    }
+  ]
 }
