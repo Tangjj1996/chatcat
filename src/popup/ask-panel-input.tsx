@@ -38,7 +38,7 @@ const Input: React.FC = () => {
           onChange={(event) => {
             setKeywords(event.target.value);
           }}
-          className="h-10 max-h-80 resize-none rounded-md border border-slate-300 p-2 md:w-[600px]"
+          className="h-10 max-h-80 resize-none rounded-md border border-slate-300 p-2 max-sm:w-[300px] md:w-[600px]"
           onKeyDown={(event) => {
             if (event.code === "Enter") {
               event.preventDefault();

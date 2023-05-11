@@ -13,11 +13,11 @@ const Display: React.FC = () => {
     if (index <= serverData.length - 1) {
       return (
         <>
-          <div className="mx-auto flex flex-col gap-4 md:w-[600px]">
+          <div className="mx-auto flex flex-col gap-4 max-sm:w-[300px] md:w-[600px]">
             <UserOutline className="self-end" />
             <Card rtl>{client}</Card>
           </div>
-          <div className="mx-auto flex flex-col gap-4 md:w-[600px]">
+          <div className="mx-auto flex flex-col gap-4 max-sm:w-[300px] md:w-[600px]">
             <OpenAiOutline />
             <Card>{serverData[index]}</Card>
           </div>
@@ -25,7 +25,7 @@ const Display: React.FC = () => {
       );
     }
     return (
-      <div className="mx-auto flex flex-col gap-4 md:w-[600px]">
+      <div className="mx-auto flex flex-col gap-4 max-sm:w-[300px] md:w-[600px]">
         <UserOutline className="self-end" />
         <Card rtl>{client}</Card>
       </div>
@@ -34,7 +34,7 @@ const Display: React.FC = () => {
   if (clienData.length < serverData.length) {
     sessionPanel.push(
       ...serverData.map((server) => (
-        <div className="mx-auto flex flex-col gap-4 md:w-[600px]">
+        <div className="mx-auto flex flex-col gap-4 max-sm:w-[300px] md:w-[600px]">
           <OpenAiOutline />
           <Card>{server}</Card>
         </div>
