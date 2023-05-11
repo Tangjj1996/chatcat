@@ -1,14 +1,11 @@
 import esbuild from "esbuild";
 import fs from "fs-extra";
 import consola from "consola";
-import postcssplugin from "esbuild-style-plugin";
-import autoprefixer from "autoprefixer";
-import tailwindcss from "tailwindcss";
 import liveServer from "live-server";
 import * as dotenv from "dotenv";
 
 import { OUTPUT_DIR } from "./const";
-import wasmPlugin from "./plugin/wasm-plugin";
+import config from "./config.base";
 
 dotenv.config();
 
@@ -18,27 +15,7 @@ async function removeOldDir() {
 }
 
 async function runEsbuild() {
-  const ctx = await esbuild.context({
-    entryPoints: ["src/background/index.ts", "src/popup/index.tsx"],
-    bundle: true,
-    outdir: OUTPUT_DIR,
-    treeShaking: true,
-    minify: true,
-    define: {
-      ACCESS_TOKEN: JSON.stringify(process.env.ACCESS_TOKEN!),
-    },
-    loader: {
-      ".png": "dataurl",
-    },
-    plugins: [
-      wasmPlugin,
-      postcssplugin({
-        postcss: {
-          plugins: [tailwindcss, autoprefixer],
-        },
-      }),
-    ],
-  });
+  const ctx = await esbuild.context(config);
   await ctx.watch();
   consola.success("Esbuild bundle successfully");
 }
