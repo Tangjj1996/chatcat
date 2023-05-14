@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useState, forwardRef, useEffect } from "react";
 import { useRequest } from "ahooks";
 import { useAtom } from "jotai";
 import clx from "classnames";
+import type { ForwardRefRenderFunction } from "react";
 
 import { postAsk } from "../service/openai/api";
 import { clientAtom, serverAtom } from "../model/ask-panel-session";
 import { LoadingOutline, AirPlaneOutline } from "../assets/icon";
+import { DisplayMethod } from "./interface";
 
-const Input: React.FC = () => {
+const Input: ForwardRefRenderFunction<
+  DisplayMethod,
+  Record<string, unknown>
+> = (_, displayRef) => {
   const [, setClientData] = useAtom(clientAtom);
-  const [, setServerData] = useAtom(serverAtom);
+  const [serverData, setServerData] = useAtom(serverAtom);
   const [keywords, setKeywords] = useState("");
   const { loading, error, runAsync } = useRequest(postAsk, {
     manual: true,
@@ -62,6 +67,12 @@ const Input: React.FC = () => {
     ]);
   };
 
+  useEffect(() => {
+    (
+      displayRef as React.MutableRefObject<DisplayMethod>
+    ).current.scrollToBottom?.();
+  }, [serverData[serverData.length - 1]?.text]);
+
   if (error) {
     throw error;
   }
@@ -99,4 +110,4 @@ const Input: React.FC = () => {
   );
 };
 
-export default Input;
+export default forwardRef(Input);

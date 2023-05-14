@@ -1,13 +1,26 @@
-import React from "react";
+import { useRef, useImperativeHandle, forwardRef } from "react";
 import { useAtom } from "jotai";
-
+import type { ForwardRefRenderFunction } from "react";
 import { clientAtom, serverAtom } from "../model/ask-panel-session";
-import Card from "../components/card";
 import { OpenAiOutline, UserOutline } from "../assets/icon";
+import Card from "../components/card";
+import { DisplayMethod } from "./interface";
 
-const Display: React.FC = () => {
+const Display: ForwardRefRenderFunction<
+  DisplayMethod,
+  Record<string, unknown>
+> = (_, ref) => {
   const [clienData] = useAtom(clientAtom);
   const [serverData] = useAtom(serverAtom);
+  const displayPanel = useRef<HTMLDivElement>(null);
+
+  useImperativeHandle(ref, () => {
+    return {
+      scrollToBottom: () => {
+        displayPanel.current?.scrollTo(0, document.body.scrollHeight);
+      },
+    };
+  });
 
   const sessionPanel = clienData.map((client, index) => {
     if (index <= serverData.length - 1) {
@@ -42,10 +55,13 @@ const Display: React.FC = () => {
     );
   }
   return (
-    <div className="flex w-full flex-auto flex-col gap-5 overflow-scroll scroll-smooth py-6 hover:scroll-auto">
+    <div
+      ref={displayPanel}
+      className="flex w-full flex-auto flex-col gap-5 overflow-scroll scroll-smooth py-6 hover:scroll-auto"
+    >
       {sessionPanel}
     </div>
   );
 };
 
-export default Display;
+export default forwardRef(Display);
