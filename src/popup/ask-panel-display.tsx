@@ -17,7 +17,7 @@ const Display: ForwardRefRenderFunction<
   useImperativeHandle(ref, () => {
     return {
       scrollToBottom: () => {
-        displayPanel.current?.scrollTo(0, document.body.scrollHeight);
+        displayPanel.current?.scrollTo(0, displayPanel.current.scrollHeight);
       },
     };
   });
