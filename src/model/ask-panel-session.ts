@@ -1,5 +1,12 @@
 import { atom } from "jotai";
 
-export const clientAtom = atom<string[]>([]);
+interface BaseModelData {
+  type: "human" | "ai" | "system";
+  streaming: boolean;
+  streamed: boolean;
+  text: string;
+}
 
-export const serverAtom = atom<string[]>([]);
+export const clientAtom = atom<BaseModelData[]>([]);
+
+export const serverAtom = atom<BaseModelData[]>([]);

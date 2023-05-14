@@ -19,10 +19,47 @@ const Input: React.FC = () => {
     if (!keywords) {
       return;
     }
-    setClientData((data) => [...data, keywords]);
+    setClientData((data) => [
+      ...data,
+      { type: "human", streaming: false, streamed: false, text: keywords },
+    ]);
     setKeywords("");
-    const reuslt = await runAsync(keywords);
-    setServerData((data) => [...data, reuslt]);
+    await runAsync({
+      msg: keywords,
+      handleLLMNewToken: (token) => {
+        setServerData((data) => {
+          if (data.length === 0) {
+            return [
+              { type: "ai", streamed: false, streaming: true, text: token },
+            ];
+          }
+          if (data[data.length - 1].streaming) {
+            return [
+              ...data.slice(0, -1),
+              {
+                type: "ai",
+                streamed: false,
+                streaming: true,
+                text: data[data.length - 1].text + token,
+              },
+            ];
+          }
+          return [
+            ...data,
+            { type: "ai", streamed: false, streaming: true, text: token },
+          ];
+        });
+      },
+    });
+    setServerData((data) => [
+      ...data.slice(0, -1),
+      {
+        type: "ai",
+        streamed: true,
+        streaming: false,
+        text: data[data.length - 1].text,
+      },
+    ]);
   };
 
   if (error) {

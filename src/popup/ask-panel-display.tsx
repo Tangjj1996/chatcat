@@ -15,11 +15,11 @@ const Display: React.FC = () => {
         <>
           <div className="mx-auto flex flex-col gap-4 max-sm:w-[300px] md:w-[600px]">
             <UserOutline className="self-end" />
-            <Card rtl>{client}</Card>
+            <Card rtl>{client.text}</Card>
           </div>
           <div className="mx-auto flex flex-col gap-4 max-sm:w-[300px] md:w-[600px]">
             <OpenAiOutline />
-            <Card>{serverData[index]}</Card>
+            <Card>{serverData[index].text}</Card>
           </div>
         </>
       );
@@ -27,7 +27,7 @@ const Display: React.FC = () => {
     return (
       <div className="mx-auto flex flex-col gap-4 max-sm:w-[300px] md:w-[600px]">
         <UserOutline className="self-end" />
-        <Card rtl>{client}</Card>
+        <Card rtl>{client.text}</Card>
       </div>
     );
   });
@@ -36,7 +36,7 @@ const Display: React.FC = () => {
       ...serverData.map((server) => (
         <div className="mx-auto flex flex-col gap-4 max-sm:w-[300px] md:w-[600px]">
           <OpenAiOutline />
-          <Card>{server}</Card>
+          <Card>{server.text}</Card>
         </div>
       ))
     );
