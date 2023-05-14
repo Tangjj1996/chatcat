@@ -1,9 +1,9 @@
 import { OpenAI } from "langchain/llms/openai";
 
 const model = new OpenAI({
-  openAIApiKey: ACCESS_TOKEN,
+  openAIApiKey: OPENAI_API_KEY,
   temperature: 0.9,
-  stream: true,
+  streaming: true,
   callbacks: [
     {
       handleLLMNewToken(token: string) {

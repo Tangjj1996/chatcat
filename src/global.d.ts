@@ -1,1 +1,1 @@
-declare const ACCESS_TOKEN: string;
+declare const OPENAI_API_KEY: string;

@@ -22,7 +22,7 @@ export default {
   treeShaking: true,
   minify: true,
   define: {
-    ACCESS_TOKEN: JSON.stringify(process.env.ACCESS_TOKEN!),
+    OPENAI_API_KEY: JSON.stringify(process.env.OPENAI_API_KEY!),
   },
   loader: {
     ".png": "dataurl",
