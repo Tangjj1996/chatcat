@@ -2,6 +2,7 @@ import browser from "webextension-polyfill";
 
 async function main() {
   const tab = await browser.tabs.getCurrent();
+  console.log(browser.tabs);
 
   if (tab.id) {
     browser.scripting.executeScript({
@@ -9,6 +10,8 @@ async function main() {
       files: ["/content/insert-dom.js"],
     });
   }
+
+  browser.tabs.executeScript(undefined, {});
 }
 
-// main();
+main().catch(console.error);

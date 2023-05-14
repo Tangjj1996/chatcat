@@ -13,8 +13,8 @@ dotenv.config();
 export default {
   entryPoints: [
     "src/background/index.ts",
-    // 'src/content/index.ts',
-    // "src/content/insert-dom.ts",
+    "src/content/index.ts",
+    "src/content/insert-dom.ts",
     "src/popup/index.tsx",
   ],
   bundle: true,
