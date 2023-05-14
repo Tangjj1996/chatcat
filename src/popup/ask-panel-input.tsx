@@ -3,7 +3,6 @@ import { useRequest } from "ahooks";
 import { useAtom } from "jotai";
 import clx from "classnames";
 import type { ForwardRefRenderFunction } from "react";
-
 import { postAsk } from "../service/openai/api";
 import { clientAtom, serverAtom } from "../model/ask-panel-session";
 import { LoadingOutline, AirPlaneOutline } from "../assets/icon";
@@ -21,7 +20,7 @@ const Input: ForwardRefRenderFunction<
   });
 
   const handleSearch = async () => {
-    if (!keywords) {
+    if (!keywords || loading) {
       return;
     }
     setClientData((data) => [
@@ -72,6 +71,14 @@ const Input: ForwardRefRenderFunction<
       displayRef as React.MutableRefObject<DisplayMethod>
     ).current.scrollToBottom?.();
   }, [serverData[serverData.length - 1]?.text]);
+
+  useEffect(() => {
+    if (!keywords) {
+      (
+        displayRef as React.MutableRefObject<DisplayMethod>
+      ).current.scrollToBottom?.();
+    }
+  }, [keywords]);
 
   if (error) {
     throw error;
