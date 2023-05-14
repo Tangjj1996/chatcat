@@ -1,5 +1,6 @@
-.html,
+html,
 body {
   min-width: 350px;
   min-height: 600px;
+  font-size: 100%;
 }
