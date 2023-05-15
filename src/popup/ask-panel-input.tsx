@@ -4,9 +4,10 @@ import { useAtom } from "jotai";
 import clx from "classnames";
 import TextareaAutosize from "react-textarea-autosize";
 import type { ForwardRefRenderFunction } from "react";
-import { postAsk } from "../service/openai/api";
+import { postAsk, controller } from "../service/openai/api";
 import { clientAtom, serverAtom } from "../model/ask-panel-session";
 import { LoadingOutline, AirPlaneOutline } from "../assets/icon";
+import Button from "../components/button";
 import { DisplayMethod } from "./interface";
 
 const Input: ForwardRefRenderFunction<
@@ -95,6 +96,16 @@ const Input: ForwardRefRenderFunction<
   return (
     <div className="flex w-full justify-center">
       <div className="relative">
+        {loading && (
+          <Button
+            className="absolute bottom-[calc(100%+10px)] left-1/2 -translate-x-1/2"
+            onClick={() => {
+              controller.abort();
+            }}
+          >
+            停止响应
+          </Button>
+        )}
         <TextareaAutosize
           maxRows={3}
           placeholder="随便问点什么吧～"
