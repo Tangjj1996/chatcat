@@ -6,6 +6,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import type { ForwardRefRenderFunction } from "react";
 import { postAsk, controller } from "../service/openai/api";
 import { clientAtom, serverAtom } from "../model/ask-panel-session";
+import { modelAtom } from "../model/setting-center";
 import { LoadingOutline, AirPlaneOutline } from "../assets/icon";
 import Button from "../components/button";
 import { DisplayMethod } from "./interface";
@@ -16,6 +17,7 @@ const Input: ForwardRefRenderFunction<
 > = (_, displayRef) => {
   const [, setClientData] = useAtom(clientAtom);
   const [serverData, setServerData] = useAtom(serverAtom);
+  const [model] = useAtom(modelAtom);
   const [keywords, setKeywords] = useState("");
 
   const { loading, error, runAsync } = useRequest(postAsk, {
@@ -32,6 +34,7 @@ const Input: ForwardRefRenderFunction<
     ]);
     setKeywords("");
     await runAsync({
+      model,
       msg: keywords,
       handleLLMNewToken: (token) => {
         setServerData((data) => {
