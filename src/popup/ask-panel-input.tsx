@@ -102,7 +102,7 @@ const Input: ForwardRefRenderFunction<
           onChange={(event) => {
             setKeywords(event.target.value);
           }}
-          className="max-h-24 min-h-[40px] resize-none rounded-md border border-slate-300 py-2 pl-2 pr-8 max-sm:w-[300px] md:w-[600px]"
+          className="resize-none rounded-md border border-slate-300 py-2 pl-2 pr-8 max-sm:w-[300px] md:w-[600px]"
           onKeyDown={(event) => {
             if (event.code === "Enter") {
               event.preventDefault();
