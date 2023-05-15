@@ -16,7 +16,6 @@ const Input: ForwardRefRenderFunction<
   const [serverData, setServerData] = useAtom(serverAtom);
   const [keywords, setKeywords] = useState("");
   const textHeight = useRef<HTMLTextAreaElement>(null);
-  const textWrapHeight = useRef<HTMLDivElement>(null);
 
   const { loading, error, runAsync } = useRequest(postAsk, {
     manual: true,
@@ -87,10 +86,11 @@ const Input: ForwardRefRenderFunction<
         displayRef as React.MutableRefObject<DisplayMethod>
       ).current.scrollToBottom?.();
     }
-    if (textWrapHeight.current && textHeight.current) {
-      textWrapHeight.current.style.height = keywords
-        ? `${textHeight.current.scrollHeight}px`
-        : "32px";
+    if (textHeight.current) {
+      textHeight.current.style.height = "auto";
+      textHeight.current.style.height = keywords
+        ? `${textHeight.current.scrollHeight + 2}px`
+        : "40px";
     }
   }, [keywords]);
 
@@ -100,31 +100,29 @@ const Input: ForwardRefRenderFunction<
 
   return (
     <div className="flex w-full justify-center">
-      <div className="relative h-full">
-        <div className="h-8 min-h-[32px]" ref={textWrapHeight}>
-          <textarea
-            ref={textHeight}
-            placeholder="随便问点什么吧～"
-            value={keywords}
-            onChange={(event) => {
-              setKeywords(event.target.value);
-            }}
-            className="h-full resize-none rounded-md border border-slate-300 py-2 pl-2 pr-8 max-sm:w-[300px] md:w-[600px]"
-            onKeyDown={(event) => {
-              if (event.code === "Enter") {
-                event.preventDefault();
-                handleSearch();
-              }
-            }}
-          />
-        </div>
+      <div className="relative">
+        <textarea
+          ref={textHeight}
+          placeholder="随便问点什么吧～"
+          value={keywords}
+          onChange={(event) => {
+            setKeywords(event.target.value);
+          }}
+          className="max-h-24 min-h-[40px] resize-none rounded-md border border-slate-300 py-2 pl-2 pr-8 max-sm:w-[300px] md:w-[600px]"
+          onKeyDown={(event) => {
+            if (event.code === "Enter") {
+              event.preventDefault();
+              handleSearch();
+            }
+          }}
+        />
         {loading ? (
-          <LoadingOutline className="absolute right-3 top-[6px]" />
+          <LoadingOutline className="absolute right-3 top-2" />
         ) : (
           <AirPlaneOutline
             onClick={handleSearch}
             className={clx(
-              "absolute right-3 top-[6px] transition-opacity",
+              "absolute right-3 top-2 transition-opacity",
               keywords ? "opacity-100 hover:cursor-pointer" : "opacity-20"
             )}
           />
