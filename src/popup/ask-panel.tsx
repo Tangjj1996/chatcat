@@ -7,7 +7,7 @@ const AskPanel = () => {
   const displayRef = useRef<DisplayMethod>(null);
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-full flex-col gap-5 py-6">
       <AskDisplay ref={displayRef} />
       <AskInput ref={displayRef} />
     </div>

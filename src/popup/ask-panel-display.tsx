@@ -57,7 +57,7 @@ const Display: ForwardRefRenderFunction<
   return (
     <div
       ref={displayPanel}
-      className="flex w-full flex-auto flex-col gap-5 overflow-scroll scroll-smooth py-6 hover:scroll-auto"
+      className="flex w-full flex-auto flex-col gap-5 overflow-scroll scroll-smooth hover:scroll-auto"
     >
       {sessionPanel}
     </div>

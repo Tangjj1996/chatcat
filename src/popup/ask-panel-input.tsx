@@ -32,11 +32,15 @@ const Input: ForwardRefRenderFunction<
       msg: keywords,
       handleLLMNewToken: (token) => {
         setServerData((data) => {
+          // 取第一个toke
+          // example data = ['token']
           if (data.length === 0) {
             return [
               { type: "ai", streamed: false, streaming: true, text: token },
             ];
           }
+          // 取数组最后一个item与新token拼接
+          // example data = ['old', 'token', 'new' + token]
           if (data[data.length - 1].streaming) {
             return [
               ...data.slice(0, -1),
@@ -48,6 +52,8 @@ const Input: ForwardRefRenderFunction<
               },
             ];
           }
+          // 数组长度加1，拼接新的token
+          // example data = ['old', 'token', token]
           return [
             ...data,
             { type: "ai", streamed: false, streaming: true, text: token },
@@ -85,22 +91,24 @@ const Input: ForwardRefRenderFunction<
   }
 
   return (
-    <div className="flex w-full flex-none justify-center pb-10">
-      <div className="relative h-10">
-        <textarea
-          placeholder="Send a message"
-          value={keywords}
-          onChange={(event) => {
-            setKeywords(event.target.value);
-          }}
-          className="h-10 max-h-80 resize-none rounded-md border border-slate-300 py-2 pl-2 pr-8 max-sm:w-[300px] md:w-[600px]"
-          onKeyDown={(event) => {
-            if (event.code === "Enter") {
-              event.preventDefault();
-              handleSearch();
-            }
-          }}
-        />
+    <div className="flex w-full flex-none justify-center">
+      <div className="relative h-full">
+        <div className="h-10 max-h-[80px] min-h-[40px]">
+          <textarea
+            placeholder="随便问点什么吧～"
+            value={keywords}
+            onChange={(event) => {
+              setKeywords(event.target.value);
+            }}
+            className="h-full resize-none rounded-md border border-slate-300 py-2 pl-2 pr-8 max-sm:w-[300px] md:w-[600px]"
+            onKeyDown={(event) => {
+              if (event.code === "Enter") {
+                event.preventDefault();
+                handleSearch();
+              }
+            }}
+          />
+        </div>
         {loading ? (
           <LoadingOutline className="absolute right-3 top-2" />
         ) : (

@@ -1,3 +1,6 @@
+/**
+ * 对话记录的所有数据
+ */
 import { atom } from "jotai";
 
 interface BaseModelData {
