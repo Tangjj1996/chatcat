@@ -1,4 +1,4 @@
-import { useState, forwardRef, useEffect } from "react";
+import { useState, forwardRef, useEffect, useRef } from "react";
 import { useRequest } from "ahooks";
 import { useAtom } from "jotai";
 import clx from "classnames";
@@ -15,6 +15,9 @@ const Input: ForwardRefRenderFunction<
   const [, setClientData] = useAtom(clientAtom);
   const [serverData, setServerData] = useAtom(serverAtom);
   const [keywords, setKeywords] = useState("");
+  const textHeight = useRef<HTMLTextAreaElement>(null);
+  const textWrapHeight = useRef<HTMLDivElement>(null);
+
   const { loading, error, runAsync } = useRequest(postAsk, {
     manual: true,
   });
@@ -84,6 +87,11 @@ const Input: ForwardRefRenderFunction<
         displayRef as React.MutableRefObject<DisplayMethod>
       ).current.scrollToBottom?.();
     }
+    if (textWrapHeight.current && textHeight.current) {
+      textWrapHeight.current.style.height = keywords
+        ? `${textHeight.current.scrollHeight}px`
+        : "32px";
+    }
   }, [keywords]);
 
   if (error) {
@@ -91,10 +99,11 @@ const Input: ForwardRefRenderFunction<
   }
 
   return (
-    <div className="flex w-full flex-none justify-center">
+    <div className="flex w-full justify-center">
       <div className="relative h-full">
-        <div className="h-10 max-h-[80px] min-h-[40px]">
+        <div className="h-8 min-h-[32px]" ref={textWrapHeight}>
           <textarea
+            ref={textHeight}
             placeholder="随便问点什么吧～"
             value={keywords}
             onChange={(event) => {
@@ -110,12 +119,12 @@ const Input: ForwardRefRenderFunction<
           />
         </div>
         {loading ? (
-          <LoadingOutline className="absolute right-3 top-2" />
+          <LoadingOutline className="absolute right-3 top-[6px]" />
         ) : (
           <AirPlaneOutline
             onClick={handleSearch}
             className={clx(
-              "absolute right-3 top-2 transition-opacity",
+              "absolute right-3 top-[6px] transition-opacity",
               keywords ? "opacity-100 hover:cursor-pointer" : "opacity-20"
             )}
           />
