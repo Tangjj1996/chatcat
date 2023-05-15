@@ -3,6 +3,7 @@
   "rules": {
     "@typescript-eslint/no-non-null-assertion": 0,
     "multiline-ternary": 0,
-    "unicorn/prefer-top-level-await": 0
+    "unicorn/prefer-top-level-await": 0,
+    "unicorn/no-null": 0
   }
 }

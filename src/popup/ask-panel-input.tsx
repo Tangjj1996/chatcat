@@ -1,7 +1,8 @@
-import { useState, forwardRef, useEffect, useRef } from "react";
+import { useState, forwardRef, useEffect } from "react";
 import { useRequest } from "ahooks";
 import { useAtom } from "jotai";
 import clx from "classnames";
+import TextareaAutosize from "react-textarea-autosize";
 import type { ForwardRefRenderFunction } from "react";
 import { postAsk } from "../service/openai/api";
 import { clientAtom, serverAtom } from "../model/ask-panel-session";
@@ -15,7 +16,6 @@ const Input: ForwardRefRenderFunction<
   const [, setClientData] = useAtom(clientAtom);
   const [serverData, setServerData] = useAtom(serverAtom);
   const [keywords, setKeywords] = useState("");
-  const textHeight = useRef<HTMLTextAreaElement>(null);
 
   const { loading, error, runAsync } = useRequest(postAsk, {
     manual: true,
@@ -86,12 +86,6 @@ const Input: ForwardRefRenderFunction<
         displayRef as React.MutableRefObject<DisplayMethod>
       ).current.scrollToBottom?.();
     }
-    if (textHeight.current) {
-      textHeight.current.style.height = "auto";
-      textHeight.current.style.height = keywords
-        ? `${textHeight.current.scrollHeight + 2}px`
-        : "40px";
-    }
   }, [keywords]);
 
   if (error) {
@@ -101,8 +95,8 @@ const Input: ForwardRefRenderFunction<
   return (
     <div className="flex w-full justify-center">
       <div className="relative">
-        <textarea
-          ref={textHeight}
+        <TextareaAutosize
+          maxRows={3}
           placeholder="随便问点什么吧～"
           value={keywords}
           onChange={(event) => {
