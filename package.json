@@ -4,9 +4,9 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "start": "pnpm dev",
-    "dev": "esno ./script/config.dev.ts",
-    "build": "esno ./script/config.prod.ts",
+    "start": "npm run dev",
+    "dev": "tsx ./script/config.dev.ts",
+    "build": "tsx ./script/config.prod.ts",
     "prepare": "husky install",
     "lint": "eslint . && prettier -c src test",
     "lint:fix": "eslint . --fix && prettier -c -w src test"
@@ -28,7 +28,6 @@
     "esbuild-style-plugin": "^1.6.2",
     "eslint": "^8.40.0",
     "eslint-config-unjs": "^0.1.0",
-    "esno": "^0.16.3",
     "fs-extra": "^11.1.1",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
@@ -37,6 +36,7 @@
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.2.8",
     "tailwindcss": "^3.3.2",
+    "tsx": "^3.12.7",
     "vitest": "^0.31.0"
   },
   "lint-staged": {
