@@ -2,12 +2,9 @@ import esbuild from "esbuild";
 import fs from "fs-extra";
 import consola from "consola";
 import liveServer from "live-server";
-import * as dotenv from "dotenv";
 
 import { OUTPUT_DIR } from "./const";
 import config from "./config.base";
-
-dotenv.config();
 
 async function removeOldDir() {
   await fs.remove(OUTPUT_DIR);

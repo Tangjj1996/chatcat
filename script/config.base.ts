@@ -1,14 +1,12 @@
+import "dotenv/config";
 import postcssplugin from "esbuild-style-plugin";
 import autoprefixer from "autoprefixer";
 import tailwindcss from "tailwindcss";
-import * as dotenv from "dotenv";
 
 import type { BuildOptions } from "esbuild";
 
 import { OUTPUT_DIR } from "./const";
 import wasmPlugin from "./plugin/wasm-plugin";
-
-dotenv.config();
 
 export default {
   entryPoints: [
