@@ -10,7 +10,7 @@ import {
   serverAtom,
   displayAtom,
 } from "../model/ask-panel-session";
-import { modelAtom } from "../model/setting-center";
+import { chainAtom } from "../model/setting-center";
 import { LoadingOutline, AirPlaneOutline } from "../assets/icon";
 import Button from "../components/button";
 import { DisplayMethod } from "./interface";
@@ -21,8 +21,8 @@ const Input: ForwardRefRenderFunction<
 > = (_, displayRef) => {
   const setClientData = useSetAtom(clientAtom);
   const displayData = useAtomValue(displayAtom);
+  const chain = useAtomValue(chainAtom);
   const [serverData, setServerData] = useAtom(serverAtom);
-  const [model] = useAtom(modelAtom);
   const [keywords, setKeywords] = useState("");
   const controllerRef = useRef<AbortController>();
 
@@ -47,7 +47,7 @@ const Input: ForwardRefRenderFunction<
     setKeywords("");
     controllerRef.current = new AbortController();
     const openAiRes = await runAsync({
-      model,
+      chain,
       msg: keywords,
       signal: controllerRef.current.signal,
       handleLLMNewToken: (token) => {

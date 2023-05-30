@@ -1,21 +1,12 @@
-import { PromptTemplate } from "langchain/prompts";
-import { LLMChain } from "langchain/chains";
 import type { PostAskData } from "./interface";
 
-export const postAsk = ({
+export const postAsk = async ({
   msg,
   handleLLMNewToken,
-  model,
-  abstraction = "",
-  context = "",
+  chain,
   signal,
 }: PostAskData) => {
-  const prompt = PromptTemplate.fromTemplate(
-    `${abstraction}${context && `\ncontext: ${context}`}{word}`
-  );
-  const chain = new LLMChain({ llm: model, prompt });
-
-  return chain
-    .call({ word: msg, signal }, [{ handleLLMNewToken }])
+  return await chain
+    .call({ input: msg }, [{ handleLLMNewToken }])
     .catch(console.error);
 };

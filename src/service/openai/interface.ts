@@ -1,11 +1,9 @@
-import type { OpenAI } from "langchain/llms/openai";
+import { ConversationChain } from "langchain/chains";
 import type { Prompt } from "../../model/prompt";
 
 export interface PostAskData extends Prompt {
   msg: string;
   handleLLMNewToken: (token: string) => void;
-  model: OpenAI;
-  abstraction?: string;
-  context?: string;
+  chain: ConversationChain;
   signal?: AbortSignal;
 }
