@@ -1,11 +1,15 @@
 import { useState, forwardRef, useEffect, useRef } from "react";
 import { useRequest } from "ahooks";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom, useAtomValue } from "jotai";
 import clx from "classnames";
 import TextareaAutosize from "react-textarea-autosize";
 import type { ForwardRefRenderFunction } from "react";
 import { postAsk } from "../service/openai/api";
-import { clientAtom, serverAtom } from "../model/ask-panel-session";
+import {
+  clientAtom,
+  serverAtom,
+  displayAtom,
+} from "../model/ask-panel-session";
 import { modelAtom } from "../model/setting-center";
 import { LoadingOutline, AirPlaneOutline } from "../assets/icon";
 import Button from "../components/button";
@@ -15,7 +19,8 @@ const Input: ForwardRefRenderFunction<
   DisplayMethod,
   Record<string, unknown>
 > = (_, displayRef) => {
-  const [, setClientData] = useAtom(clientAtom);
+  const setClientData = useSetAtom(clientAtom);
+  const displayData = useAtomValue(displayAtom);
   const [serverData, setServerData] = useAtom(serverAtom);
   const [model] = useAtom(modelAtom);
   const [keywords, setKeywords] = useState("");
@@ -31,11 +36,17 @@ const Input: ForwardRefRenderFunction<
     }
     setClientData((data) => [
       ...data,
-      { type: "human", streaming: false, streamed: false, text: keywords },
+      {
+        type: "human",
+        streaming: false,
+        streamed: false,
+        text: keywords,
+        sequence: displayData.length,
+      },
     ]);
     setKeywords("");
     controllerRef.current = new AbortController();
-    const openaiRes = await runAsync({
+    const openAiRes = await runAsync({
       model,
       msg: keywords,
       signal: controllerRef.current.signal,
@@ -45,7 +56,13 @@ const Input: ForwardRefRenderFunction<
           // example data = ['token']
           if (data.length === 0) {
             return [
-              { type: "ai", streamed: false, streaming: true, text: token },
+              {
+                type: "ai",
+                streamed: false,
+                streaming: true,
+                text: token,
+                sequence: displayData.length,
+              },
             ];
           }
           // 取数组最后一个item与新token拼接
@@ -58,6 +75,7 @@ const Input: ForwardRefRenderFunction<
                 streamed: false,
                 streaming: true,
                 text: data[data.length - 1].text + token,
+                sequence: displayData.length,
               },
             ];
           }
@@ -65,21 +83,27 @@ const Input: ForwardRefRenderFunction<
           // example data = ['old', 'token', token]
           return [
             ...data,
-            { type: "ai", streamed: false, streaming: true, text: token },
+            {
+              type: "ai",
+              streamed: false,
+              streaming: true,
+              text: token,
+              sequence: displayData.length,
+            },
           ];
         });
       },
     });
-    if (!openaiRes) {
-      return;
-    }
     setServerData((data) => [
       ...data.slice(0, -1),
       {
         type: "ai",
         streamed: true,
         streaming: false,
-        text: data[data.length - 1].text,
+        text: data[data.length - 1]?.text,
+        sequence: openAiRes
+          ? displayData.length
+          : data[data.length - 1].sequence,
       },
     ]);
   };

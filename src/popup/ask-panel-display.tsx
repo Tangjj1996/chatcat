@@ -1,7 +1,7 @@
 import { useRef, useImperativeHandle, forwardRef } from "react";
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import type { ForwardRefRenderFunction } from "react";
-import { clientAtom, serverAtom } from "../model/ask-panel-session";
+import { displayAtom } from "../model/ask-panel-session";
 import { OpenAiOutline, UserOutline } from "../assets/icon";
 import Card from "../components/card";
 import { DisplayMethod } from "./interface";
@@ -10,8 +10,7 @@ const Display: ForwardRefRenderFunction<
   DisplayMethod,
   Record<string, unknown>
 > = (_, ref) => {
-  const [clienData] = useAtom(clientAtom);
-  const [serverData] = useAtom(serverAtom);
+  const displayData = useAtomValue(displayAtom);
   const displayPanel = useRef<HTMLDivElement>(null);
 
   useImperativeHandle(ref, () => {
@@ -22,38 +21,63 @@ const Display: ForwardRefRenderFunction<
     };
   });
 
-  const sessionPanel = clienData.map((client, index) => {
-    if (index <= serverData.length - 1) {
+  const sessionPanel = displayData.map(({ type, text, sequence }) => {
+    if (type === "human") {
       return (
-        <>
-          <div className="flex w-max max-w-full flex-col gap-4 self-end">
-            <UserOutline className="self-end" />
-            <Card rtl>{client.text}</Card>
-          </div>
-          <div className="flex w-max max-w-full flex-col gap-4">
-            <OpenAiOutline />
-            <Card>{serverData[index].text}</Card>
-          </div>
-        </>
+        <div
+          key={sequence}
+          className="flex w-max max-w-full flex-col gap-4 self-end"
+        >
+          <UserOutline className="self-end" />
+          <Card rtl>{text}</Card>
+        </div>
       );
     }
-    return (
-      <div className="flex w-max max-w-full flex-col gap-4 self-end">
-        <UserOutline className="self-end" />
-        <Card rtl>{client.text}</Card>
-      </div>
-    );
-  });
-  if (clienData.length < serverData.length) {
-    sessionPanel.push(
-      ...serverData.map((server) => (
-        <div className="flex w-max max-w-full flex-col gap-4">
+
+    if (type === "ai") {
+      return (
+        <div key={sequence} className="flex w-max max-w-full flex-col gap-4">
           <OpenAiOutline />
-          <Card>{server.text}</Card>
+          <Card>{text}</Card>
         </div>
-      ))
-    );
-  }
+      );
+    }
+
+    return <></>;
+  });
+
+  // const sessionPanel = clienData.map((client, index) => {
+  //   if (index <= serverData.length - 1) {
+  //     return (
+  //       <>
+  //         <div className="flex w-max max-w-full flex-col gap-4 self-end">
+  //           <UserOutline className="self-end" />
+  //           <Card rtl>{client.text}</Card>
+  //         </div>
+  //         <div className="flex w-max max-w-full flex-col gap-4">
+  //           <OpenAiOutline />
+  //           <Card>{serverData[index].text}</Card>
+  //         </div>
+  //       </>
+  //     );
+  //   }
+  //   return (
+  //     <div className="flex w-max max-w-full flex-col gap-4 self-end">
+  //       <UserOutline className="self-end" />
+  //       <Card rtl>{client.text}</Card>
+  //     </div>
+  //   );
+  // });
+  // if (clienData.length < serverData.length) {
+  //   sessionPanel.push(
+  //     ...serverData.map((server) => (
+  //       <div className="flex w-max max-w-full flex-col gap-4">
+  //         <OpenAiOutline />
+  //         <Card>{server.text}</Card>
+  //       </div>
+  //     ))
+  //   );
+  // }
   return (
     <div
       ref={displayPanel}
