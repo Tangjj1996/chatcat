@@ -1,10 +1,10 @@
-import { useState, forwardRef, useEffect } from "react";
+import { useState, forwardRef, useEffect, useRef } from "react";
 import { useRequest } from "ahooks";
 import { useAtom } from "jotai";
 import clx from "classnames";
 import TextareaAutosize from "react-textarea-autosize";
 import type { ForwardRefRenderFunction } from "react";
-import { postAsk, controller } from "../service/openai/api";
+import { postAsk } from "../service/openai/api";
 import { clientAtom, serverAtom } from "../model/ask-panel-session";
 import { modelAtom } from "../model/setting-center";
 import { LoadingOutline, AirPlaneOutline } from "../assets/icon";
@@ -19,6 +19,7 @@ const Input: ForwardRefRenderFunction<
   const [serverData, setServerData] = useAtom(serverAtom);
   const [model] = useAtom(modelAtom);
   const [keywords, setKeywords] = useState("");
+  const controllerRef = useRef<AbortController>();
 
   const { loading, error, runAsync } = useRequest(postAsk, {
     manual: true,
@@ -33,9 +34,11 @@ const Input: ForwardRefRenderFunction<
       { type: "human", streaming: false, streamed: false, text: keywords },
     ]);
     setKeywords("");
-    await runAsync({
+    controllerRef.current = new AbortController();
+    const openaiRes = await runAsync({
       model,
       msg: keywords,
+      signal: controllerRef.current.signal,
       handleLLMNewToken: (token) => {
         setServerData((data) => {
           // 取第一个toke
@@ -67,6 +70,9 @@ const Input: ForwardRefRenderFunction<
         });
       },
     });
+    if (!openaiRes) {
+      return;
+    }
     setServerData((data) => [
       ...data.slice(0, -1),
       {
@@ -103,7 +109,7 @@ const Input: ForwardRefRenderFunction<
           <Button
             className="absolute bottom-[calc(100%+10px)] left-1/2 -translate-x-1/2"
             onClick={() => {
-              controller.abort();
+              controllerRef.current?.abort();
             }}
           >
             停止响应
