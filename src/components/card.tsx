@@ -12,8 +12,10 @@ const Card: React.FC<React.PropsWithChildren<CardProps>> = ({
   return (
     <div
       className={clx(
-        "whitespace-pre-wrap rounded p-4 text-slate-600",
-        rtl ? "bg-blue-100 text-right" : "bg-gray-300"
+        "whitespace-pre-wrap rounded p-4",
+        rtl
+          ? "bg-blue-400 text-right text-slate-50"
+          : "bg-gray-300 text-slate-600"
       )}
     >
       <ReactMd children={children as string}></ReactMd>

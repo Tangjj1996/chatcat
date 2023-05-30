@@ -26,11 +26,11 @@ const Display: ForwardRefRenderFunction<
     if (index <= serverData.length - 1) {
       return (
         <>
-          <div className="mx-auto flex flex-col gap-4 max-sm:w-[300px] md:w-[600px]">
+          <div className="flex w-max max-w-full flex-col gap-4 self-end">
             <UserOutline className="self-end" />
             <Card rtl>{client.text}</Card>
           </div>
-          <div className="mx-auto flex flex-col gap-4 max-sm:w-[300px] md:w-[600px]">
+          <div className="flex w-max max-w-full flex-col gap-4">
             <OpenAiOutline />
             <Card>{serverData[index].text}</Card>
           </div>
@@ -38,7 +38,7 @@ const Display: ForwardRefRenderFunction<
       );
     }
     return (
-      <div className="mx-auto flex flex-col gap-4 max-sm:w-[300px] md:w-[600px]">
+      <div className="flex w-max max-w-full flex-col gap-4 self-end">
         <UserOutline className="self-end" />
         <Card rtl>{client.text}</Card>
       </div>
@@ -47,7 +47,7 @@ const Display: ForwardRefRenderFunction<
   if (clienData.length < serverData.length) {
     sessionPanel.push(
       ...serverData.map((server) => (
-        <div className="mx-auto flex flex-col gap-4 max-sm:w-[300px] md:w-[600px]">
+        <div className="flex w-max max-w-full flex-col gap-4">
           <OpenAiOutline />
           <Card>{server.text}</Card>
         </div>
@@ -57,7 +57,7 @@ const Display: ForwardRefRenderFunction<
   return (
     <div
       ref={displayPanel}
-      className="flex w-full flex-auto flex-col gap-5 overflow-scroll scroll-smooth hover:scroll-auto"
+      className="flex w-full flex-auto flex-col gap-5 overflow-scroll scroll-smooth hover:scroll-auto max-sm:w-[300px] md:w-[600px]"
     >
       {sessionPanel}
     </div>
