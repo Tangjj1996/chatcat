@@ -18,6 +18,6 @@ export const modelAtom = atom(
 );
 
 export const chainAtom = atom((get) => {
-  const memory = new BufferMemory();
+  const memory = new BufferMemory({ inputKey: "input" });
   return new ConversationChain({ llm: get(modelAtom), memory });
 });

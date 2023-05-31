@@ -7,6 +7,6 @@ export const postAsk = async ({
   signal,
 }: PostAskData) => {
   return await chain
-    .call({ input: msg }, [{ handleLLMNewToken }])
+    .call({ input: msg, signal }, [{ handleLLMNewToken }])
     .catch(console.error);
 };
