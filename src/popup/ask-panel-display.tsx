@@ -46,38 +46,6 @@ const Display: ForwardRefRenderFunction<
     return <></>;
   });
 
-  // const sessionPanel = clienData.map((client, index) => {
-  //   if (index <= serverData.length - 1) {
-  //     return (
-  //       <>
-  //         <div className="flex w-max max-w-full flex-col gap-4 self-end">
-  //           <UserOutline className="self-end" />
-  //           <Card rtl>{client.text}</Card>
-  //         </div>
-  //         <div className="flex w-max max-w-full flex-col gap-4">
-  //           <OpenAiOutline />
-  //           <Card>{serverData[index].text}</Card>
-  //         </div>
-  //       </>
-  //     );
-  //   }
-  //   return (
-  //     <div className="flex w-max max-w-full flex-col gap-4 self-end">
-  //       <UserOutline className="self-end" />
-  //       <Card rtl>{client.text}</Card>
-  //     </div>
-  //   );
-  // });
-  // if (clienData.length < serverData.length) {
-  //   sessionPanel.push(
-  //     ...serverData.map((server) => (
-  //       <div className="flex w-max max-w-full flex-col gap-4">
-  //         <OpenAiOutline />
-  //         <Card>{server.text}</Card>
-  //       </div>
-  //     ))
-  //   );
-  // }
   return (
     <div
       ref={displayPanel}
